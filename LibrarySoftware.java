@@ -35,9 +35,9 @@ public class LibrarySoftwre implements MouseListener{
     public static String DB_NAME = "Library_System";
     private static String DB_URL = "jdbc:mysql://localhost:3306/";
     private static String DB_USERNAME = "root";
-    private static String DB_PASSWORD = "Sagar612$";
-    public static String admin="Praveen";
-    public static String Pass="1234";
+    private static String DB_PASSWORD = "YOUR_DB_PASSWORD";
+    public static String admin="ADMIN_NAME";
+    public static String Pass="ADMIN_PASSWORD";
 
 
     private JFrame mainFrame;
