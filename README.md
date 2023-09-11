@@ -52,6 +52,8 @@ Before running the application, ensure that you have the following installed:
      private static final String DB_URL = "jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME";
      private static final String DB_USERNAME = "YOUR_DATABASE_USERNAME";
      private static final String DB_PASSWORD = "YOUR_DATABASE_PASSWORD";
+     public static String admin="ADMIN_NAME";
+     public static String Pass="ADMIN_PASSWORD";
      ```
 
 3. **Database Initialization:**
