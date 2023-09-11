@@ -7,6 +7,28 @@ This is a Java-based Library Management System application designed to help mana
 - **Admin Panel:** Administrators can log in to the system and perform administrative tasks.
 - **User Panel:** Registered users can borrow and return books.
 
+## Usage
+
+- **Admin Login:**
+  - To access the admin panel, log in using the admin username and password.
+- **User Login:**
+  - Registered library users can log in using their username and password.
+
+## Functionality
+
+- **Admin Panel:**
+  - Add, edit, or delete books.
+  - View a list of all books.
+  - View a list of issued books and user information.
+  - View a list of returned books and user information.
+  - Calculate fines for overdue books.
+
+- **User Panel:**
+  - View available books.
+  - Search for books by title.(added the real-time Search)
+  - Borrow books.
+  - Return books.
+
 ## Prerequisites
 
 Before running the application, ensure that you have the following installed:
@@ -40,27 +62,6 @@ Before running the application, ensure that you have the following installed:
 
    - Compile and run the `LibrarySoftware.java` file to start the application.
 
-## Usage
-
-- **Admin Login:**
-  - To access the admin panel, log in using the admin username and password.
-- **User Login:**
-  - Registered library users can log in using their username and password.
-
-## Functionality
-
-- **Admin Panel:**
-  - Add, edit, or delete books.
-  - View a list of all books.
-  - View a list of issued books and user information.
-  - View a list of returned books and user information.
-  - Calculate fines for overdue books.
-
-- **User Panel:**
-  - View available books.
-  - Search for books by title.
-  - Borrow books.
-  - Return books.
 
 ## Contributing
 
