@@ -18,6 +18,7 @@ This is a Java-based Library Management System application designed to help mana
 
 - **Admin Panel:**
   - Add books.
+  - Add New User
   - View a list of all books.
   - View a list of issued books and user information.
   - View a list of returned books and user information.
