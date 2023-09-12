@@ -42,8 +42,20 @@ Before running the application, ensure that you have the following installed:
 1. **Database Setup:**
 
    - Create a MySQL database and note down the database name, username, and password.
+  
+2. **Clone the Repository**
+     ```
+    git clone https://github.com/Sagarshivalingappaathani/LibrarySoftware-Project3.git
+    ```
 
-2. **Database Configuration:**
+3. **After cloning the repository, change the directory to the project directory using the following command:**
+
+    ```
+    cd LibrarySoftware-Project3
+    ```
+
+
+4. **Database Configuration:**
 
    - Open the `LibrarySoftware.java` file.
    - Locate the following lines and update them with your database credentials:
@@ -56,13 +68,18 @@ Before running the application, ensure that you have the following installed:
      public static String Pass="ADMIN_PASSWORD";
      ```
 
-3. **Database Initialization:**
+5. **Compile the code:**
 
-   - Run the application once. It will create the necessary database tables if they do not already exist.
+    ```
+    javac LibrarySoftware.java
+    ```
 
-4. **Run the Application:**
+6. **Finally, run:**
 
-   - Compile and run the `LibrarySoftware.java` file to start the application.
+    ```
+    java LibrarySoftware
+    ```
+
 
 
 ## Contributing
