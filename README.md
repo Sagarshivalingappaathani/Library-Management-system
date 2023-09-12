@@ -17,13 +17,16 @@ This is a Java-based Library Management System application designed to help mana
 ## Functionality
 
 - **Admin Panel:**
-  - Add, edit, or delete books.
+  - Add books.
   - View a list of all books.
   - View a list of issued books and user information.
   - View a list of returned books and user information.
+  - History of the perticular book
+  - History of the perticular User
   - Calculate fines for overdue books.
 
 - **User Panel:**
+  - Account Details(which Contains his name,id,issued books,returned books,due date and Fine details )
   - View available books.
   - Search for books by title.(added the real-time Search)
   - Borrow books.
