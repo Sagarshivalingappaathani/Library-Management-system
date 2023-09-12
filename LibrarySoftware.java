@@ -1,43 +1,27 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.awt.*;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 
-public class LibrarySoftwre implements MouseListener{
+
+public class LibrarySoftware implements MouseListener{
 
     public static String DB_NAME = "Library_System";
     private static String DB_URL = "jdbc:mysql://localhost:3306/";
-    private static String DB_USERNAME = "root";
-    private static String DB_PASSWORD = "YOUR_DB_PASSWORD";
+    private static final String DB_USERNAME = "YOUR_DATABASE_USERNAME";
+    private static final String DB_PASSWORD = "YOUR_DATABASE_PASSWORD";
     public static String admin="ADMIN_NAME";
     public static String Pass="ADMIN_PASSWORD";
+    public static String Username="";
+    public static String User_Id="";
 
 
     private JFrame mainFrame;
@@ -46,10 +30,39 @@ public class LibrarySoftwre implements MouseListener{
     JButton adminButton;
     JButton userButton;
 
-    public LibrarySoftwre() {
+    LibrarySoftware() {
         System.out.println("SKP");
         initializeMainUI();
 
+    }
+
+    private static JButton createRoundedButton(String text) {
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getModel().isArmed()) {
+                    g.setColor(Color.ORANGE);
+                } else {
+                    g.setColor(getBackground());
+                }
+                g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, 10, 10);
+                super.paintComponent(g);
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                g.setColor(Color.BLACK);
+                g.drawRoundRect(0, 0, getSize().width - 1, getSize().height - 1, 10, 10);
+            }
+        };
+        
+        button.setBackground(Color.white);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+
+        return button;
     }
 
     private void initializeMainUI() {
@@ -69,14 +82,15 @@ public class LibrarySoftwre implements MouseListener{
 
         Font font = new Font("Arial",Font.BOLD,12);
 
-        adminButton = new JButton("Admin Login");
+        
+        adminButton=createRoundedButton("Admin Login");
         adminButton.setBounds(400, 220, 120, 25);
         adminButton.setBackground(Color.yellow);
         adminButton.setFocusable(false);
         adminButton.setFont(font);
         adminButton.addMouseListener(this);
 
-        userButton = new JButton("User Login");
+        userButton = createRoundedButton("User Login");
         userButton.setBounds(400, 270, 120, 25);
         userButton.setBackground(Color.yellow);
         userButton.setFocusable(false);
@@ -151,48 +165,52 @@ public class LibrarySoftwre implements MouseListener{
         panel.setBounds(280, 240, 1000, 500);
         panel.setLayout(null);
 
-
-        JButton viewBooksButton = new JButton("View Books");
-        viewBooksButton.setBounds(0,10,150,25);
+        JButton viewBooksButton =createRoundedButton("View Books");
+        viewBooksButton.setBounds(0, 10, 150, 25);
         viewBooksButton.setBackground(Color.ORANGE);
+        viewBooksButton.setFocusable(false);
 
-
-        JButton addBooksButton=new JButton("Add Books");
+        JButton addBooksButton=createRoundedButton("Add Books");
         addBooksButton.setBounds(250,10,150,25);
         addBooksButton.setBackground(Color.ORANGE);
+        addBooksButton.setFocusable(false);
 
-
-        JButton adduserButton=new JButton("Add Users");
+        JButton adduserButton=createRoundedButton("Add User");
         adduserButton.setBounds(0,60,150,25);
         adduserButton.setBackground(Color.ORANGE);
+        adduserButton.setFocusable(false);
 
-
-        JButton issuedBooksButton = new JButton("Issued Books");
+        JButton issuedBooksButton = createRoundedButton("Issued Books");
         issuedBooksButton.setBounds(250,60,150,25);
         issuedBooksButton.setBackground(Color.ORANGE);
+        issuedBooksButton.setFocusable(false);
 
-
-        JButton returnedBooksButton = new JButton("Returned Books");
+        JButton returnedBooksButton = createRoundedButton("Returned Books");
         returnedBooksButton.setBounds(0,110,150,25);
         returnedBooksButton.setBackground(Color.ORANGE);
+        returnedBooksButton.setFocusable(false);
 
-
-        JButton histroyBooksButton = new JButton("History Of Book");
+        JButton histroyBooksButton = createRoundedButton("History Of The Book");
         histroyBooksButton.setBounds(250,110,150,25);
         histroyBooksButton.setBackground(Color.ORANGE);
+        histroyBooksButton.setFocusable(false);
 
-        JButton histroyuserButton = new JButton("History Of user");
+
+        JButton histroyuserButton = createRoundedButton("History Of The User");
         histroyuserButton.setBounds(0,160,150,25);
         histroyuserButton.setBackground(Color.ORANGE);
+        histroyuserButton.setFocusable(false);
 
 
-        JButton fine_details= new JButton("Fine Details");
+        JButton fine_details= createRoundedButton("Fine Details");
         fine_details.setBounds(250,160,150,25);
         fine_details.setBackground(Color.ORANGE);
+        fine_details.setFocusable(false);
 
-        JButton exit=new JButton("Exit");
+        JButton exit=createRoundedButton("Exit");
         exit.setBounds(170, 380, 70, 25);
         exit.setBackground(Color.RED);
+        exit.setFocusable(false);
 
 
         panel.add(viewBooksButton);
@@ -338,7 +356,7 @@ public class LibrarySoftwre implements MouseListener{
         panel1.add(label2);
         panel1.add(password);
 
-        JButton login=new JButton("Login");
+        JButton login=createRoundedButton("Login");;
         login.setBounds(30, 180, 90,30);
         login.setFont(font2);
         login.setFocusable(false);
@@ -397,11 +415,15 @@ public class LibrarySoftwre implements MouseListener{
 
     private void addbook() 
     {
+        JTextField bookidField = new JTextField(10);
         JTextField nameField = new JTextField(10);
         JTextField authorField = new JTextField(10);
+
         
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 2));
+        panel.setLayout(new GridLayout(3, 2));
+         panel.add(new JLabel("Book_ID"));
+        panel.add(bookidField);
         panel.add(new JLabel("Book_Name"));
         panel.add(nameField);
         panel.add(new JLabel("Author:"));
@@ -410,21 +432,23 @@ public class LibrarySoftwre implements MouseListener{
 
         int result = JOptionPane.showConfirmDialog(mainFrame, panel, "ADD BOOK", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
+            String bookId = bookidField.getText();
             String bookname = nameField.getText();
             String author = authorField.getText();
-            uploadbook(bookname,author);
+            uploadbook(bookId,bookname,author);
         }
 
     }
 
 
 
-    private void uploadbook(String book_name, String author ) {
+    private void uploadbook(String book_id,String book_name, String author ) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String insertProductQuery = "INSERT INTO books (book_name,author) VALUES (?,?)";
+            String insertProductQuery = "INSERT INTO books (book_id,book_name,author) VALUES (?,?,?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductQuery)) {
-                preparedStatement.setString(1,book_name);
-                preparedStatement.setString(2,author);
+                preparedStatement.setString(1,book_id);
+                preparedStatement.setString(2,book_name);
+                preparedStatement.setString(3,author);
                
 
                 preparedStatement.executeUpdate();
@@ -634,8 +658,8 @@ public class LibrarySoftwre implements MouseListener{
     }
 
 
-    public void showHistoryUser(String username, String rollno) {
-    try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+    public JTable showHistoryUser(String username, String rollno) {
+     try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
         String selectHistoryQuery = "SELECT book_name, issue_date FROM issued_books WHERE username = '" + username + "' AND user_id='" + rollno + "'";
         ResultSet resultSet = connection.createStatement().executeQuery(selectHistoryQuery);
 
@@ -683,10 +707,14 @@ public class LibrarySoftwre implements MouseListener{
 
         JTable table = new JTable(tableModel);
         JOptionPane.showMessageDialog(mainFrame, new JScrollPane(table));
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
+
+        } 
+        
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    return resultTable;
+   }
 
 
 
@@ -810,27 +838,32 @@ public class LibrarySoftwre implements MouseListener{
         panel.setLayout(null);
         panel.setBackground(Color.CYAN);
 
-        JButton viewBooksButton = new JButton("View Books");
+
+        JButton myAccountButton = createRoundedButton("My Account");
+        myAccountButton.setBounds(0,0,150,25);
+        myAccountButton.setBackground(Color.ORANGE);
+
+        JButton viewBooksButton = createRoundedButton("View Books");
         viewBooksButton.setBounds(0,50,150,25);
         viewBooksButton.setBackground(Color.ORANGE);
 
-        JButton searchBooksButton = new JButton("Search Books");
+        JButton searchBooksButton = createRoundedButton("Search Books");
         searchBooksButton.setBounds(0,100,150,25);
         searchBooksButton.setBackground(Color.ORANGE);
 
-        JButton lendBookButton = new JButton("Borrow Book");
+        JButton lendBookButton = createRoundedButton("Lend Book");
         lendBookButton.setBounds(0,150,150,25);
         lendBookButton.setBackground(Color.ORANGE);
 
-        JButton returnBookButton = new JButton("Return Book");
+        JButton returnBookButton = createRoundedButton("Return Book");
         returnBookButton.setBounds(0,200,150,25);
         returnBookButton.setBackground(Color.ORANGE);
 
-        JButton exit=new JButton("Exit");
+        JButton exit=createRoundedButton("Exit");
         exit.setBounds(30, 380, 70, 25);
         exit.setBackground(Color.RED);
 
-
+        panel.add(myAccountButton);
         panel.add(viewBooksButton);
         panel.add(searchBooksButton);
         panel.add(lendBookButton);
@@ -843,7 +876,14 @@ public class LibrarySoftwre implements MouseListener{
         userFrame.setResizable(false);
         userFrame.getContentPane().setBackground(Color.CYAN);
         userFrame.setVisible(true);
-        
+
+        myAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openUserAccount(User_Id, Username);
+            }
+        });
+                
 
         viewBooksButton.addActionListener(new ActionListener() {
             @Override
@@ -897,6 +937,8 @@ public class LibrarySoftwre implements MouseListener{
                 while (resultSet.next()) 
                 {
                     c++;
+                    Username=name;
+                    User_Id=pasword;
                     openUserUI();
                     frame.dispose();
                 }
@@ -950,7 +992,7 @@ public class LibrarySoftwre implements MouseListener{
         panel1.add(label2);
         panel1.add(password);
 
-        JButton login=new JButton("Login");
+        JButton login=createRoundedButton("Login");
         login.setBounds(30, 180, 90,30);
         login.setFont(font2);
         login.setFocusable(false);
@@ -973,60 +1015,166 @@ public class LibrarySoftwre implements MouseListener{
         
     }
 
-
-    public void Name_of_book(String input)
-    {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            String selectHistoryQuery = "SELECT book_id,book_name,author FROM books WHERE book_name LIKE '%"+input+"%'";
+    private void openUserAccount(String userId, String userName) {
+        JFrame userAccountFrame = new JFrame("User Account");
+        userAccountFrame.setSize(600, 400);
+        userAccountFrame.setLocation(380, 280);
+        userAccountFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
+        JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setLayout(new GridLayout(1, 1));
+    
+        String userInfoText = "<html><div style='text-align: center; width: 200px;'>"
+                + "<b>Name:</b> " + userName 
+                + "<hr style='margin: 3px;'>"
+                + "<b>User ID:</b> " + userId
+                + "<hr style='margin: 3px;'>"
+                + "</div></html>";
+    
+        JLabel userInfoLabel = new JLabel(userInfoText);
+        userInfoLabel.setHorizontalAlignment(JLabel.CENTER);  // Center-align the label
+        userInfoPanel.add(userInfoLabel);
+    
+        JTable historyTable = showHistory(userName, userId);
+    
+        userAccountFrame.add(userInfoPanel, BorderLayout.NORTH);
+        userAccountFrame.add(new JScrollPane(historyTable), BorderLayout.CENTER);
+    
+        userAccountFrame.setVisible(true);
+    }
+    
+
+
+    public JTable showHistory(String username, String rollno) {
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Book Name");
+        tableModel.addColumn("Issued Date");
+        tableModel.addColumn("Due Date");
+        tableModel.addColumn("Returned Date");
+        tableModel.addColumn("Fine");
+    
+        int totalFine = 0;
+    
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String selectHistoryQuery = "SELECT book_name, issue_date FROM issued_books WHERE username = '" + username + "' AND user_id='" + rollno + "'";
+            ResultSet resultSet = connection.createStatement().executeQuery(selectHistoryQuery);
+    
+            while (resultSet.next()) {
+                String book_name = resultSet.getString("book_name");
+                java.sql.Timestamp issue_timestamp = resultSet.getTimestamp("issue_date");
+                LocalDate issueLocalDate = issue_timestamp.toLocalDateTime().toLocalDate();
+                LocalDate dueLocalDate = issueLocalDate.plusDays(14);
+                String dueDate = dueLocalDate.toString();
+    
+                String selectHistoryQuery1 = "SELECT return_date FROM returned_books WHERE book_name = '" + book_name + "' AND username='" + username + "' AND user_id='" + rollno + "'";
+                ResultSet resultSet1 = connection.createStatement().executeQuery(selectHistoryQuery1);
+                String return_date = "Not Returned";
+                LocalDate returnLocalDate = LocalDate.now();
+    
+                while (resultSet1.next()) {
+                    return_date = resultSet1.getString("return_date");
+                    returnLocalDate = LocalDate.parse(return_date);
+                }
+    
+                int fine = 0;
+    
+                long daysDifference = ChronoUnit.DAYS.between(issueLocalDate, returnLocalDate);
+                if (daysDifference > 14) {
+                    long daysOverdue = daysDifference - 14;
+                    fine = (int) (daysOverdue * 10);
+                    totalFine += fine;
+                }
+    
+                Object[] row = {book_name, issue_timestamp, dueDate, return_date, fine};
+                tableModel.addRow(row);
+            }
+    
+            Object[] totalFineRow = {"", "", "", "Total Fine", totalFine};
+            tableModel.addRow(totalFineRow);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        JTable table = new JTable(tableModel);
+    
+        return table;
+    }
+    
+
+
+    
+
+    private JTextField nameField = new JTextField(10);
+    private DefaultTableModel tableModel = new DefaultTableModel();
+    private JTable resultTable = new JTable(tableModel);
+
+    public void searchbooks() {
+        JPanel searchPanel = new JPanel(new BorderLayout());
+        JPanel resultPanel = new JPanel(new BorderLayout());
+
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                performSearch(nameField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                performSearch(nameField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // This method is not relevant for plain text fields
+            }
+        });
+
+        searchPanel.add(new JLabel("Search Books:"), BorderLayout.NORTH);
+        searchPanel.add(nameField, BorderLayout.CENTER);
+
+        tableModel.addColumn("Book ID");
+        tableModel.addColumn("Book Name");
+        tableModel.addColumn("Author");
+        resultPanel.add(new JLabel("Search Results:"), BorderLayout.NORTH);
+        resultPanel.add(new JScrollPane(resultTable), BorderLayout.CENTER);
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(searchPanel, BorderLayout.NORTH);
+        mainPanel.add(resultPanel, BorderLayout.CENTER);
+
+        int result = JOptionPane.showConfirmDialog(mainFrame, mainPanel, "Search_BOOK", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            // No need to call performSearch here
+        }
+        else{
+            tableModel.setRowCount(0);
+        }
+    }
+
+    public void performSearch(String keyword) {
+        tableModel.setRowCount(0); // Clear previous results
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            String selectHistoryQuery = "SELECT book_id,book_name,author FROM books WHERE book_name LIKE '%" + keyword + "%'";
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectHistoryQuery)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
-                DefaultTableModel tableModel = new DefaultTableModel();
-                tableModel.addColumn("book_id");
-                tableModel.addColumn("book_name");
-                tableModel.addColumn("author");
-
                 while (resultSet.next()) {
                     String book_id = resultSet.getString("book_id");
-                    String book_name=resultSet.getString("book_name");
-                    String author= resultSet.getString("author");
+                    String book_name = resultSet.getString("book_name");
+                    String author = resultSet.getString("author");
 
-                    Object[] row = {book_id,book_name,author};
-
+                    Object[] row = {book_id, book_name, author};
                     tableModel.addRow(row);
                 }
-
-                JTable table = new JTable(tableModel);
-                JOptionPane.showMessageDialog(mainFrame,new JScrollPane(table));
             }
-        } 
-        
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        
-
     }
 
-    public void searchbooks()
-    {
-        JPanel panel = new JPanel();
-        JTextField namefeild= new JTextField(10);
-        panel.add(new JLabel("Type_Text"));
-        panel.add(namefeild);
-        int result = JOptionPane.showConfirmDialog(mainFrame, panel, "Search_BOOK", JOptionPane.OK_CANCEL_OPTION);
-        if(result== JOptionPane.OK_OPTION)
-        {
-            String input=namefeild.getText();
-            Name_of_book(input);
-        }
-
-
-    }
-
-
+    
+    
     private void issuedbook(String book, String username,String userid) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             String insertPurchaseQuery = "INSERT INTO  issued_books(book_name,username,user_id,issue_date) VALUES (?, ?,?, CURRENT_DATE)";
@@ -1201,11 +1349,11 @@ public class LibrarySoftwre implements MouseListener{
 
             DB_URL = "jdbc:mysql://localhost:3306/"+DB_NAME;
         
-            String createTable1 = "CREATE TABLE IF NOT EXISTS books (" +
-                "book_id INT PRIMARY KEY AUTO_INCREMENT," +
-                "book_name VARCHAR(100) NOT NULL," +
-                "author VARCHAR(100) NOT NULL"+
-                ")";
+            String createTable1 ="CREATE TABLE IF NOT EXISTS books (" +
+            "book_id INT NOT NULL UNIQUE," +
+            "book_name VARCHAR(100) NOT NULL," +
+            "author VARCHAR(100) NOT NULL" +
+            ")";
 
             String createTable2="CREATE TABLE IF NOT EXISTS users (" +
                 "user_id VARCHAR(20) PRIMARY KEY," +
@@ -1248,12 +1396,8 @@ public class LibrarySoftwre implements MouseListener{
             e.printStackTrace();
         }
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LibrarySoftwre();
-            }
-        });
+
+        new test();
     }
 
     @Override
