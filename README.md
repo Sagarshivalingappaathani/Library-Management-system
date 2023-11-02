@@ -83,10 +83,3 @@ Before running the application, ensure that you have the following installed:
     ```
     java LibrarySoftware
     ```
-
-
-
-## Contributing
-
-Contributions to this project are welcome. Feel free to open issues or create pull requests.
-
